@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthony A. Becera | Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8f7fc;
+            --bg-secondary: #ede9f7;
+            --text-primary: #2d1b4e;
+            --text-secondary: #5a4a7a;
+            --accent: #7c3aed;
+            --accent-hover: #6d28d9;
+            --border: #d4c5f0;
+            --card-bg: #ffffff;
+            --nav-shadow: rgba(124, 58, 237, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-primary: #0f0a1f;
+            --bg-secondary: #1a1329;
+            --text-primary: #e8e0f5;
+            --text-secondary: #b8a8d8;
+            --accent: #a78bfa;
+            --accent-hover: #8b5cf6;
+            --border: #3d2966;
+            --card-bg: #1f1633;
+            --nav-shadow: rgba(167, 139, 250, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 20px var(--nav-shadow);
+            z-index: 1000;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background-color: var(--accent);
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            text-align: center;
+            position: relative;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 60px;
+        }
+
+        .home-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .home-text {
+            animation: fadeInLeft 1s ease;
+        }
+
+        .profile-img-container {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        .profile-img {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 5px solid var(--accent);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 25px 80px rgba(124, 58, 237, 0.4);
+        }
+
+        .home-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--text-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .home-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .quote:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+        }
+
+        #about {
+            background-color: var(--bg-secondary);
+            animation: fadeIn 1s ease;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .about-text {
+            line-height: 1.9;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .about-text:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .about-text h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .skill-category:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(124, 58, 237, 0.2);
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .skill-category li:hover {
+            padding-left: 10px;
+            color: var(--accent);
+        }
+
+        .skill-category li:last-child {
+            border-bottom: none;
+        }
+
+        #projects {
+            background-color: var(--bg-secondary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-content h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .profile-link-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .profile-link-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .profile-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .profile-circle:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .profile-link-content {
+            flex: 1;
+        }
+
+        .profile-link-content a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .profile-link-content a:hover {
+            color: var(--accent-hover);
+        }
+
+        .contact-info {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .contact-info strong {
+            color: var(--accent);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(124, 58, 237, 0.15);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 2px solid var(--border);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--card-bg);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px var(--nav-shadow);
+                padding: 2rem 0;
+            }
+            .nav-links.active { left: 0; }
+            .home-content { grid-template-columns: 1fr; text-align: center; }
+            .profile-img { margin: 0 auto; }
+            .about-content { grid-template-columns: 1fr; }
+            .home-text h1 { font-size: 2.5rem; }
+            .tagline { font-size: 1.4rem; }
+            section h2 { font-size: 2.2rem; }
+            .nav-container { padding: 1rem; }
+            .contact-wrapper { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .projects-grid, .skills-grid { grid-template-columns: 1fr; }
+            section { padding: 3rem 1rem; }
+            .contact-form { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo" id="logoText">Toniards</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙 Dark Mode</button></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="home-content">
+            <div class="home-text">
+                <h1>Anthony A. Becera</h1>
+                <p class="tagline" id="tagline">IT Student</p>
+                <p id="homeDescription">Welcome to my portfolio! Explore my journey as a student passionate about technology and my growing business, Techniards.</p>
+                <div class="quote">
+                    <p>"If you're going through hell, keep going" - Winston Churchill</p>
+                </div>
+            </div>
+            <div class="profile-img-container">
+                <img src="gwapo.jpg" alt="Anthony A. Becera" class="profile-img" id="profileImage">
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Educational Background</h3>
+                <p>I am currently pursuing a degree in Information Technology, where I am developing my skills in programming, web development, and various IT disciplines. My academic journey has equipped me with a strong foundation in computer science principles and practical application.</p>
+                
+                <h3>Goals & Aspirations</h3>
+                <p>My goal is to finish college while expanding my small business, Techniards. I am committed to continuous learning and improvement, always seeking opportunities to expand my skill set and take on new challenges.</p>
+            </div>
+            <div class="about-text">
+                <h3>Hobbies & Personal Interests</h3>
+                <p>Outside of academics, I'm passionate about gaming, exploring the latest smartphones, laptops, and PC builds. I love staying updated with the newest gadget releases and tech innovations. Running my small business, Techniards, allows me to combine my tech enthusiasm with entrepreneurship by buying and selling quality second-hand gadgets. It's rewarding to help others find great deals on reliable tech while growing my business knowledge.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Programming Languages</h3>
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>Python</li>
+                    <li>C</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Technical Skills</h3>
+                <ul>
+                    <li>Video Editing</li>
+                    <li>Graphic Design</li>
+                    <li>Buy & Sell</li>
+                    <li>Basic Coding</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Soft Skills</h3>
+                <ul>
+                    <li>Problem Solving</li>
+                    <li>Teamwork</li>
+                    <li>Communication</li>
+                    <li>Time Management</li>
+                    <li>Adaptability</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <img src="j5.png" alt="Project 1" class="project-img" id="project1Img">
+                <div class="project-content" id="project1Content">
+                    <h3 id="project1Title">Samsung J5 Mockup</h3>
+                    <p><strong>Description:</strong> <span id="project1Desc">Tried to recreate the design of my old Samsung J5 and make it fully interactable. This project is a work in progress where I'm building an interactive phone mockup that simulates the actual device interface, complete with functional buttons and screen interactions.</span></p>
+                    <p><strong>My Role:</strong> <span id="project1Role">Sole developer responsible for design and development</span></p>
+                    <div class="project-tags" id="project1Tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="tetris.png" alt="Project 2" class="project-img" id="project2Img">
+                <div class="project-content" id="project2Content">
+                    <h3 id="project2Title">Tetris Game</h3>
+                    <p><strong>Description:</strong> <span id="project2Desc">A fully functional Tetris game built from scratch using vanilla JavaScript. This classic puzzle game features smooth controls, score tracking, and progressive difficulty levels.</span></p>
+                    <p><strong>My Role:</strong> <span id="project2Role">Sole developer responsible for design and development</span></p>
+                    <div class="project-tags" id="project2Tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <div class="contact-wrapper">
+            <div class="contact-left">
+                <div class="profile-link-item">
+                    <img src="gwapo.jpg" alt="Anthony Personal" class="profile-circle">
+                    <div class="profile-link-content">
+                        <p><strong>Personal Facebook</strong></p>
+                        <a href="https://www.facebook.com/dshgvfuyca" target="_blank">Visit My Profile</a>
+                    </div>
+                </div>
+
+                <div class="profile-link-item">
+                    <img src="logo.jpg" alt="Techniards Business" class="profile-circle">
+                    <div class="profile-link-content">
+                        <p><strong>Business Facebook</strong></p>
+                        <a href="https://www.facebook.com/profile.php?id=61580385126732" target="_blank">Visit Techniards Page</a>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <p><strong>Email:</strong> oniebecera2@gmail.com</p>
+                    <p><strong>Location:</strong> Tubod, Isabel, Leyte</p>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3 style="color: var(--accent); margin-bottom: 1rem;">Send Me a Message</h3>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="Your Email">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Your Message"></textarea>
+                </div>
+                <button class="submit-btn">Send Message</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Anthony A. Becera. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const logoText = document.getElementById('logoText');
+        const tagline = document.getElementById('tagline');
+        const homeDescription = document.getElementById('homeDescription');
+        const profileImage = document.getElementById('profileImage');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        // Project elements
+        const project1Img = document.getElementById('project1Img');
+        const project1Title = document.getElementById('project1Title');
+        const project1Desc = document.getElementById('project1Desc');
+        const project1Role = document.getElementById('project1Role');
+        const project1Tags = document.getElementById('project1Tags');
+
+        const project2Img = document.getElementById('project2Img');
+        const project2Title = document.getElementById('project2Title');
+        const project2Desc = document.getElementById('project2Desc');
+        const project2Role = document.getElementById('project2Role');
+        const project2Tags = document.getElementById('project2Tags');
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                // Dark Mode - Gadget Seller
+                themeToggle.textContent = '☀️ Light Mode';
+                logoText.textContent = 'Techniards';
+                tagline.textContent = 'Gadget Seller';
+                homeDescription.textContent = 'Welcome to Techniards! Your trusted source for quality second-hand gadgets. Explore my business journey and the amazing deals I offer.';
+                profileImage.src = 'logo.jpg';
+                profileImage.alt = 'Techniards Logo';
+                
+                // Project 1 - Phone Sold
+                project1Img.src = 's21.png';
+                project1Title.textContent = 'Phone Sold';
+                project1Desc.textContent = 'Successfully sold a Samsung S21 in excellent condition. This premium flagship device was carefully inspected and restored to optimal performance before sale. The transaction included complete accessories and warranty coverage, ensuring customer satisfaction.';
+                project1Role.textContent = 'Seller';
+                project1Tags.innerHTML = '';
+                
+                // Project 2 - Laptop Sold
+                project2Img.src = 'laptop.png';
+                project2Title.textContent = 'Laptop Sold';
+                project2Desc.textContent = 'Successfully sold an LG laptop with excellent specifications for professional and student use. The device was thoroughly tested, cleaned, and optimized before delivery. Provided full customer support and after-sales service.';
+                project2Role.textContent = 'Seller';
+                project2Tags.innerHTML = '';
+            } else {
+                // Light Mode - IT Student
+                themeToggle.textContent = '🌙 Dark Mode';
+                logoText.textContent = 'Toniards';
+                tagline.textContent = 'IT Student';
+                homeDescription.textContent = 'Welcome to my portfolio! Explore my journey as a student passionate about technology and my growing business, Techniards.';
+                profileImage.src = 'gwapo.jpg';
+                profileImage.alt = 'Anthony A. Becera';
+                
+                // Project 1 - Samsung J5 Mockup
+                project1Img.src = 'j5.png';
+                project1Title.textContent = 'Samsung J5 Mockup';
+                project1Desc.textContent = 'Tried to recreate the design of my old Samsung J5 and make it fully interactable. This project is a work in progress where I\'m building an interactive phone mockup that simulates the actual device interface, complete with functional buttons and screen interactions.';
+                project1Role.textContent = 'Sole developer responsible for design and development';
+                project1Tags.innerHTML = '<span class="tag">HTML</span><span class="tag">CSS</span>';
+                
+                // Project 2 - Tetris Game
+                project2Img.src = 'tetris.png';
+                project2Title.textContent = 'Tetris Game';
+                project2Desc.textContent = 'A fully functional Tetris game built from scratch using vanilla JavaScript. This classic puzzle game features smooth controls, score tracking, and progressive difficulty levels.';
+                project2Role.textContent = 'Sole developer responsible for design and development';
+                project2Tags.innerHTML = '<span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>';
+            }
+        });
+
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
